@@ -10,7 +10,7 @@
     "test:lint": "eslint ./app/**",
     "clean": "rimraf build",
     "build": "npm run test && npm run clean && cross-env NODE_ENV=production webpack -p --optimize-minimize",
-    "serve": "./setup.sh && cross-env NODE_ENV=development && npm run test && webpack-dev-server"
+    "serve": "cross-env NODE_ENV=development && npm run test && webpack-dev-server"
   },
   "jest": {
     "setupFiles": [
