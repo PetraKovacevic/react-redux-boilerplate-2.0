@@ -6,6 +6,7 @@ import api from '@/services/api';
 
 class Login extends React.Component {
 
+    // TODO: @Petra, take these out of here and into some actions :)
     signIn = (email, password) => {
         return api.authenticate('auth/jwt/login', email, password);
     }
