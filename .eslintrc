@@ -1,0 +1,41 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "spread": true,
+            "defaultParams": true,
+            "experimentalObjectRestSpread": true // allow ...obj
+        }
+    },
+    "rules": {
+        "strict": 0,
+        "eqeqeq": "error",
+        "semi": "warn", // semin colon all the things
+        "no-duplicate-imports": "error", // cleans things up!
+        "no-console": "warn",
+        "react/prefer-es6-class": "error",
+        "react/prop-types": [
+            "warn",
+            {
+                "skipUndeclared": true
+            }
+        ] // only put this back in if we are going to enforce propTypes on all components
+    },
+    "plugins": [
+        "react"
+    ],
+    "extends": [
+        "plugin:react/recommended"
+    ],
+    "settings": {
+        "react": {
+            "version": "15.5.4"
+        }
+    },
+    "import/resolver": {
+      "babel-plugin-root-import": {}
+    }
+}
