@@ -5,7 +5,7 @@ class Error404 extends React.Component {
     render() {
         return (
             <div>
-                {getString(strings.error404Text)}
+                This is the 404 page.
             </div>
         );
     }
