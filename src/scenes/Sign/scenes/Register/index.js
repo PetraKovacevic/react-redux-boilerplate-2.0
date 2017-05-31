@@ -3,7 +3,21 @@ import { Row, Col } from 'react-bootstrap';
 
 import RegisterForm from './components/RegisterForm';
 
-class Login extends React.Component {
+class Register extends React.Component {
+
+    register = (client, user) => {
+        let apiConfig = {
+            headers: {
+                'X-Related-Url': appConfig['setPasswordUrl']
+            }
+        };
+
+        return api.post('register', {
+            client,
+            user
+        }, apiConfig);
+    }
+
     render() {
         return (
             <Row>
@@ -15,4 +29,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Register;

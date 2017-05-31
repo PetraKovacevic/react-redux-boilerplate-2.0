@@ -2,7 +2,7 @@
 
 It's advisable to have a newer version of [Node.js](https://nodejs.org/en/download/current/) and npm on your system
 
-Make sure you have yarn installed (`npm install -g yard` or `homebrew install yarn`)
+Make sure you have yarn installed (`npm install -g yarn` or `homebrew install yarn`)
 
 
 1. Clone this repo

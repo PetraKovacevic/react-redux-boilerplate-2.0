@@ -1,5 +1,5 @@
-import api from './api';
-import { getToken } from './token';
+import api from '@/services/api';
+import { getToken } from './services/token';
 import axios from 'axios';
 
 /**
@@ -9,7 +9,12 @@ import axios from 'axios';
  * @param password
  * @returns {axios.Promise}
  */
-export const authenticate = (path, username, password) => {
+
+const apiEndpoints = {
+    auth: 'auth/jwt/login'
+};
+
+export const authenticate = (username, password) => {
 
     let config = {
         auth: {
@@ -18,7 +23,7 @@ export const authenticate = (path, username, password) => {
         }
     };
 
-    return api.get(`${this.root}/${path}`, config);
+    return api.get(`${this.root}/${apiEndpoints.auth}`, config);
 };
 
 /**

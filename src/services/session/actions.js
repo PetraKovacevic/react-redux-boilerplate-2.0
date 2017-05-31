@@ -6,10 +6,10 @@
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
 
-import AuthApi from '../api/AuthApi';
-import UserApi from '../api/UserApi';
+// import AuthApi from '../api/AuthApi';
+// import UserApi from '../api/UserApi';
 
-import { generatePassword, getCurrentUserDetails, getAllowedRoutes, isRouteAllowed } from '../utils/utils';
+// import { generatePassword, getCurrentUserDetails, getAllowedRoutes, isRouteAllowed } from '../utils/utils';
 import {
     AUTH_SUCCESS,
     AUTH_ERROR,
@@ -55,37 +55,7 @@ export function authSuccess(token, user, redirect = '/my-details') {
     };
 }
 
-export function signInUser({ email, password }) {
-    return function(dispatch) {
 
-        // Let the pages know that the user is being loaded
-        dispatch({
-            type: USER_SIGNING_IN
-        });
-
-        // Submit email/password to server
-        AuthApi.signIn(email, password)
-            .then(response => {
-                let redirect = '/my-details';
-                dispatch(authSuccess(
-                    response,
-                    {
-                        user: {
-                            userType: 'test'
-                        }
-                    },
-                    redirect
-                ));
-            })
-            .catch(error => {
-                if(typeof error.data.message !== 'undefined') {
-                    dispatch(authError(error.data.message));
-                    return;
-                }
-                dispatch(authError(error.data.error));
-            });
-    };
-}
 
 export function signUpUser({ company_name, first_name, last_name, email }) {
     return function(dispatch) {
