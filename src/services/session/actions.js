@@ -31,7 +31,7 @@ export function authError(error, registrationErrors = '') {
 }
 
 export function authSuccess(token, user, redirect = '/my-details') {
-    return function(dispatch){
+    return function (dispatch) {
 
         // If user is successfully authenticated:
         // Update state
@@ -58,7 +58,7 @@ export function authSuccess(token, user, redirect = '/my-details') {
 
 
 export function signUpUser({ company_name, first_name, last_name, email }) {
-    return function(dispatch) {
+    return function (dispatch) {
         let password = generatePassword(); // Create a random password so that the user can login
 
         // Let the pages now that the user roles and permissions
@@ -72,10 +72,7 @@ export function signUpUser({ company_name, first_name, last_name, email }) {
 
         AuthApi.register({ name: company_name }, { first_name, last_name, email, password })
             .then(response => {
-                // TODO:
-                console.log(response);
                 localStorage.setItem('token', response.data.token);
-
                 dispatch(authSuccess(
                     response.data.token,
                     {
@@ -91,12 +88,12 @@ export function signUpUser({ company_name, first_name, last_name, email }) {
 
                 let registrationErrors = '';
                 if (!_.isEmpty(error.data.errors)) {
-                    registrationErrors = _.mapKeys(error.data.errors, function(value, key) {
+                    registrationErrors = _.mapKeys(error.data.errors, function (value, key) {
                         return key.split('.')[1];
                     });
                 }
 
-                if(typeof error.data.message !== 'undefined') {
+                if (typeof error.data.message !== 'undefined') {
                     dispatch(authError(error.data.message, registrationErrors));
                 } else {
                     dispatch(authError(error.data.error, registrationErrors));
@@ -106,8 +103,8 @@ export function signUpUser({ company_name, first_name, last_name, email }) {
 }
 
 export function signOutUser(shouldRedirect = true) {
-    return function(dispatch) {
-        dispatch({type: UNAUTH_USER});
+    return function (dispatch) {
+        dispatch({ type: UNAUTH_USER });
         localStorage.removeItem('token');
 
         if (shouldRedirect) {
@@ -124,8 +121,8 @@ export function updateAuthUserState(updatedUser) {
         user = userDetails.user
         ;
 
-    user = { ...user, ...updatedUser};
-    userDetails = {...userDetails, user};
+    user = { ...user, ...updatedUser };
+    userDetails = { ...userDetails, user };
 
     localStorage.setItem('currentUserDetails', JSON.stringify(userDetails));
     return { type: AUTH_SUCCESS, payload: userDetails };

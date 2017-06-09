@@ -11,17 +11,16 @@ const endPoints = {
     put: 'users'
 };
 
-export const get = () => api.get(endPoints.get);
-export const getUser = uuid => api.get(`${endPoints.get}/${uuid}`);
-export const checkUniqueEmail = email => api.head(`${endPoints.check}/${encodeURIComponent(email)}/email`);
-export const updateUser = (userUuid, data) => api.patch(`${endPoints.update}/${userUuid}`, data);
-export const saveUser = (uuid, data) => _.isEmpty(uuid) ? createUser(data) : updateUser(uuid, data);
-export const setNewPassword = (userEmail, resetUuid, password) => api.post(`${endPoints.post}/${encodeURIComponent(userEmail)}/password-resets/${resetUuid}`, { password: password });
-export const resetPassword = (userEmail, resetUuid, password) => api.put(`${endPoints.put}/${encodeURIComponent(userEmail)}/password-resets/${resetUuid}`, { password: password });
-export const validateResetUuid = (userEmail, resetUuid) => api.head(`${endPoints.put}/${encodeURIComponent(userEmail)}/password-resets/${resetUuid}`);
-export const requestPasswordReset = (userEmail, resetUrl) => api.post(`${endPoints.post}/${encodeURIComponent(userEmail)}/password-resets`, { resetUrl: resetUrl });
-export const create = data => {
-    // If the password is not set generate a password for the user
+export function get() { return api.get(endPoints.get); };
+export function getUser(uuid) { return api.get(`${endPoints.get}/${uuid}`); }
+export function checkUniqueEmail(email) { return api.head(`${endPoints.check}/${encodeURIComponent(email)}/email`); }
+export function updateUser(userUuid, data) { return api.patch(`${endPoints.update}/${userUuid}`, data); }
+export function saveUser(uuid, data) { return _.isEmpty(uuid) ? createUser(data) : updateUser(uuid, data); }
+export function setNewPassword(userEmail, resetUuid, password) { return api.post(`${endPoints.post}/${encodeURIComponent(userEmail)}/password-resets/${resetUuid}`, { password: password }); }
+export function resetPassword(userEmail, resetUuid, password) { return api.put(`${endPoints.put}/${encodeURIComponent(userEmail)}/password-resets/${resetUuid}`, { password: password }); }
+export function validateResetUuid(userEmail, resetUuid) { return api.head(`${endPoints.put}/${encodeURIComponent(userEmail)}/password-resets/${resetUuid}`); }
+export function requestPasswordReset(userEmail, resetUrl) { return api.post(`${endPoints.post}/${encodeURIComponent(userEmail)}/password-resets`, { resetUrl: resetUrl }); }
+export function create(data) {
     if (_.isEmpty(data.password)) {
         data.password = generatePassword();
     }
