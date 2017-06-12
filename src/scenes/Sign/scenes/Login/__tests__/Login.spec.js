@@ -1,14 +1,19 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
+import configureStore from 'redux-mock-store';
+
 import Login from '../index';
+
 
 
 describe('Login page', function () {
 
-    let container;
+    const mockStore = configureStore();
+    let store, container;
 
     beforeEach(() => {
-        container = shallow(<Login />);
+        store = mockStore({});
+        container = shallow(<Login store={store} />);
     });
 
     it('should render without throwing an error', function () {

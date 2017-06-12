@@ -80,7 +80,7 @@ module.exports = {
       DEBUG: false
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor']
+      names: ['vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html'

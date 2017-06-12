@@ -1,18 +1,18 @@
-import api from '@/services/api';
+import * as api from '@/services/api';
 import { getToken } from './services/token';
 import axios from 'axios';
 
+const apiEndpoints = {
+    auth: 'auth/jwt/login',
+    refresh: 'auth/jwt/refresh'
+};
+
 /**
  *
- * @param path
  * @param username
  * @param password
  * @returns {axios.Promise}
  */
-
-const apiEndpoints = {
-    auth: 'auth/jwt/login'
-};
 
 export const authenticate = (username, password) => {
 
@@ -23,7 +23,7 @@ export const authenticate = (username, password) => {
         }
     };
 
-    return api.get(`${this.root}/${apiEndpoints.auth}`, config);
+    return api.get(apiEndpoints.auth, config);
 };
 
 /**
@@ -31,7 +31,7 @@ export const authenticate = (username, password) => {
  * @returns {axios.Promise}
  */
 export const refreshToken = () => {
-    return api.get('auth/jwt/refresh');
+    return api.get(apiEndpoints.refresh);
 };
 
 export const configureAxios = (store) => {

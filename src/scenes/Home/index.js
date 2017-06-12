@@ -6,7 +6,7 @@ class Home extends React.Component {
         return (
             <Row>
                 <Col sm={12}>
-                    Home Page... this will have its own components plus some shared ones
+                    Home Page... this will have its own components plus some shared ones.
                 </Col>
             </Row>
         );

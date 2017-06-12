@@ -1,81 +1,103 @@
 import axios from 'axios';
 import appConfig from './config';
 
-class APIUtil {
+export default class APIUtil {
 
     constructor(root = appConfig.apiUrl) {
         this.root = root;
     }
 
-    /**
-     * Get request
-     *
-     * @param path
-     * @returns {*}
-     */
     head(path) {
-        return axios.head(`${this.root}/${path}`);
+        return head(path, this.root);
     }
 
-    /**
-     * Get request
-     *
-     * @param path
-     * @returns {*}
-     */
-    get(path) {
-        return axios.get(`${this.root}/${path}`);
+    get(path, params) {
+        return get(path, params, this.root);
     }
 
-    /**
-     * Post request
-     *
-     * @param path
-     * @param data
-     * @param config
-     * @returns {axios.Promise}
-     */
-    post(path, data, config = {}) {
-        return axios.post(`${this.root}/${path}`, data, config);
+    post(path, data, config) {
+        return post(path, data, config, this.root);
     }
 
-
-    /**
-     *
-     * @param path
-     * @param data
-     * @param config
-     * @returns {axios.Promise}
-     */
-    put(path, data, config = {}) {
-        return axios.put(`${this.root}/${path}`, data, config);
+    put(path, data, config) {
+        return put(path, data, config, this.root);
     }
 
-    /**
-     *
-     * @param path
-     * @param data
-     * @param config
-     * @returns {axios.Promise}
-     */
-    patch(path, data, config = {}) {
-        return axios.patch(`${this.root}/${path}`, data, config);
+    patch(path, data, config) {
+        return patch(path, data, config, this.root);
     }
 
-    /**
-     * Delete request
-     *
-     * @param path
-     * @param data
-     * @returns {axios.Promise}
-     */
-    delete(path, data = null) {
-        let config = {
-            data: data
-        };
-
-        return axios.delete(`${this.root}/${path}`, config);
+    delete(path, data) {
+        return remove(path, data, this.root);
     }
+
+}
+/**
+ * Get request
+ *
+ * @param path
+ * @returns {*}
+ */
+export function head(path, root = appConfig.apiUrl) {
+    return axios.head(`${root}/${path}`);
 }
 
-export default APIUtil;
+/**
+ * Get request
+ *
+ * @param path
+ * @returns {*}
+ */
+export function get(path, params, root = appConfig.apiUrl) {
+    return axios.get(`${root}/${path}`, { params });
+}
+
+/**
+ * Post request
+ *
+ * @param path
+ * @param data
+ * @param config
+ * @returns {axios.Promise}
+ */
+export function post(path, data, config = {}, root = appConfig.apiUrl) {
+    return axios.post(`${root}/${path}`, data, config);
+}
+
+
+/**
+ *
+ * @param path
+ * @param data
+ * @param config
+ * @returns {axios.Promise}
+ */
+export function put(path, data, config = {}, root = appConfig.apiUrl) {
+    return axios.put(`${root}/${path}`, data, config);
+}
+
+/**
+ *
+ * @param path
+ * @param data
+ * @param config
+ * @returns {axios.Promise}
+ */
+export function patch(path, data, config = {}, root = appConfig.apiUrl) {
+    return axios.patch(`${root}/${path}`, data, config);
+}
+
+/**
+ * Delete request
+ *
+ * @param path
+ * @param data
+ * @returns {axios.Promise}
+ */
+export function remove(path, data = null) {
+    let config = {
+        data: data
+    };
+
+    return axios.delete(`${root}/${path}`, config);
+}

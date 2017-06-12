@@ -6,9 +6,6 @@
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
 
-// import AuthApi from '../api/AuthApi';
-// import UserApi from '../api/UserApi';
-
 // import { generatePassword, getCurrentUserDetails, getAllowedRoutes, isRouteAllowed } from '../utils/utils';
 import {
     AUTH_SUCCESS,
@@ -33,8 +30,6 @@ export function authError(error, registrationErrors = '') {
 export function authSuccess(token, user, redirect = '/my-details') {
     return function (dispatch) {
 
-        // If user is successfully authenticated:
-        // Update state
         dispatch({
             type: AUTH_SUCCESS,
             payload: {
@@ -45,7 +40,6 @@ export function authSuccess(token, user, redirect = '/my-details') {
 
         // Save JWT token and user details to local storage
         localStorage.setItem('token', token);
-
         localStorage.setItem('currentUserDetails', JSON.stringify({ user }));
 
         // Redirect to a page...
@@ -60,12 +54,6 @@ export function authSuccess(token, user, redirect = '/my-details') {
 export function signUpUser({ company_name, first_name, last_name, email }) {
     return function (dispatch) {
         let password = generatePassword(); // Create a random password so that the user can login
-
-        // Let the pages now that the user roles and permissions
-        // are being loaded
-        dispatch({
-            type: USER_ROLE_LOADING
-        });
 
         // Need to share the data with the second promise
         let combinedUserData = {};
@@ -127,7 +115,6 @@ export function updateAuthUserState(updatedUser) {
     localStorage.setItem('currentUserDetails', JSON.stringify(userDetails));
     return { type: AUTH_SUCCESS, payload: userDetails };
 }
-
 
 export function updateCurrentUserState(user) {
     localStorage.setItem('currentUserDetails', JSON.stringify(user));

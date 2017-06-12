@@ -1,4 +1,4 @@
-import api from './api';
+import * as api from './api';
 import { authSuccess, authError } from '@/services/session/actions';
 import { USER_SIGNING_IN } from './types';
 

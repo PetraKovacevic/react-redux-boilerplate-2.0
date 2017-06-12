@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import api from '@/services/api';
+import * as api from '@/services/api';
 import { generatePassword } from '@/utils';
 
 const endPoints = {
