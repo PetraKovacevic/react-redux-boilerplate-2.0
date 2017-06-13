@@ -9,8 +9,8 @@
     "test:coverage": "jest --coverage",
     "test:lint": "eslint ./app/**",
     "clean": "rimraf build",
-    "build": "npm run test && npm run clean && cross-env NODE_ENV=production webpack -p --optimize-minimize",
-    "serve": "cross-env NODE_ENV=development && npm run test && webpack-dev-server"
+    "build": "yarn run test && yarn run clean && cross-env NODE_ENV=production webpack -p --optimize-minimize",
+    "serve": "cross-env NODE_ENV=development && yarn run test && webpack-dev-server"
   },
   "jest": {
     "setupFiles": [
