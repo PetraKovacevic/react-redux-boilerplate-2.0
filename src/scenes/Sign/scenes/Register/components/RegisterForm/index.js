@@ -1,4 +1,5 @@
 import React from 'react';
+import { func } from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 
 class RegisterForm extends React.Component {
@@ -12,5 +13,9 @@ class RegisterForm extends React.Component {
         );
     }
 }
+
+RegisterForm.propTypes = {
+    handleSubmit: func.isRequired
+};
 
 export default RegisterForm;
