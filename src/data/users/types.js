@@ -1,0 +1,2 @@
+export const FETCHING_USERS = 'FETCHING_USERS';
+export const UPDATE_USERS = 'UPDATE_USERS';

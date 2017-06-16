@@ -6,7 +6,13 @@ import {
     STOP_REFRESHING_AUTH_TOKEN
 } from './types';
 
-export default function (state = { user: { userType: '' } }, action) {
+const initialState = {
+    user: {
+        userType: ''
+    }
+};
+
+export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case AUTH_SUCCESS:
             return { ...state, error: '', registrationError: '', authenticated: true, user: action.payload.user, token: action.payload.token };
