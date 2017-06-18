@@ -3,7 +3,7 @@ import {
     UPDATE_USERS
 } from './types';
 
-const initialState = {
+export const initialState = {
     fetching: false,
     list: []
 };
