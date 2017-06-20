@@ -23,12 +23,12 @@
                 }
             ]
         ],
-        [
-            "import",
-            {
-                "libraryName": "react-bootstrap",
-                "style": false
-            }
-        ]
+        // [
+        //     "import",
+        //     {
+        //         "libraryName": "react-bootstrap",
+        //         "style": false
+        //     }
+        // ]
     ]
 }

@@ -1,10 +1,5 @@
-import {
-    reducer as userReducer
-} from '../reducer';
-
-import {
-    updateUsers,
-} from '../actions';
+import {reducer as userReducer} from '../reducer';
+import * as types from '../types';
 
 describe('User reducer', () => {
 
@@ -23,12 +18,25 @@ describe('User reducer', () => {
 
     it('should handle the updateUsers action correctly', () => {
         const users = [
-            { username: 'Test' },
-            { username: 'Test 2' }
+            {
+                username: 'Test'
+            }, {
+                username: 'Test 2'
+            }
         ];
-        state.list = users;
-        const expectedResult = state;
 
-        expect(userReducer(state, updateUsers(users))).toEqual(expectedResult);
+        const action = {
+            type: types.UPDATE_USERS,
+            payload: {
+                users
+            }
+        };
+
+        const expectedResult = {
+            fetching: false,
+            list: users
+        };
+
+        expect(userReducer(state, action)).toEqual(expectedResult);
     });
 });

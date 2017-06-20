@@ -2,15 +2,15 @@
   "name": "react-boilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "./app/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test:lint": "eslint ./app/**",
+    "test:lint": "eslint ./src/**",
     "clean": "rimraf build",
     "build": "yarn run test && yarn run clean && cross-env NODE_ENV=production webpack -p --optimize-minimize",
-    "serve": "cross-env NODE_ENV=development && yarn run test && webpack-dev-server"
+    "serve": "yarn run test && cross-env NODE_ENV=development webpack-dev-server"
   },
   "jest": {
     "setupFiles": [
@@ -20,7 +20,8 @@
       "./node_modules/enzyme-to-json/serializer"
     ],
     "moduleNameMapper": {
-      "^.+\\.(css|scss|less)$": "identity-obj-proxy"
+      "^.+\\.(css|scss|less)$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/fileMock.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   },
@@ -88,6 +89,7 @@
     "babel-polyfill": "^6.23.0",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
+    "image-webpack-loader": "^3.3.1",
     "jsbn": "^0.1.1",
     "jwt-decode": "^2.1.0",
     "lodash": "^4.13.1",
