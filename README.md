@@ -21,11 +21,37 @@ Make sure you have yarn installed (`npm install -g yarn` or `homebrew install ya
 - Components that only belong to one scene, should be a child of that scene
 - The same rule goes with actions, reducers, services, etc. Anything that is a direct child of something else should be nested accordingly in the folder structure
 - Use the `@` symbol when importing other components. See [this](https://www.npmjs.com/package/babel-plugin-root-import) for more info. (You will thank me later)
+- Try and use the container pattern. Containers do minimal markup (cols and rows), are responsible for data fetching, state management, handling events. Children of those containers have the component markup passed in through props
 
 ### Default Routes
 
 - /
 - /about-us
+- /login
+
+Any route not defined will fallback to a 404 page
+
+### Styles and images
+
+You can import SCSS and LESS files directly into your components. These will be built into a main.[hash].css file and placed into the build directory. A `<link>` tag will also be injected into the index.html file.
+```
+/my-component
+  /index.js
+  /styles.scss or styles.less
+  /my-image.png
+```
+In your component:
+```
+import './styles.scss';
+import myImage from './my-image.png';
+
+<img src={myImage} />
+
+```
+Or in your stylesheet
+```
+background: url('my-image.png') no-repeat;
+```
 
 ### Editor config
 

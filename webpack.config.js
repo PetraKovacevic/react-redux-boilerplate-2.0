@@ -3,8 +3,12 @@ const path = require('path');
 const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-console.log('env: ', process.env.NODE_ENV);
+const ExtractStyles = new ExtractTextPlugin({
+  filename: '[name].[contenthash].css',
+  disable: process.env.NODE_ENV === 'development'
+});
 
 const VENDOR_LIBS = [
   'react',
@@ -14,7 +18,8 @@ const VENDOR_LIBS = [
   'react-dom',
   'redux-thunk',
   'redux-devtools-extension',
-  'babel-polyfill'
+  'babel-polyfill',
+  'react-bootstrap'
 ];
 
 module.exports = {
@@ -51,23 +56,62 @@ module.exports = {
             options: {
               importLoaders: 1
             }
-          },
-          'less-loader'
+          }
         ]
       }, {
         test: /\.scss$/,
-        use: [
-          {
-            loader: "style-loader"
-          }, {
-            loader: "css-loader"
-          }, {
-            loader: "sass-loader",
-            options: {
-              includePaths: ['src/common/scss'].map((d) => path.join(__dirname, d)).map((g) => glob.sync(g)).reduce((a, c) => a.concat(c), [])
+        use: process.env.NODE_ENV !== 'development'
+          ? ExtractStyles.extract({
+            use: [
+              {
+                loader: "css-loader"
+              }, {
+                loader: "sass-loader",
+                options: {
+                  includePaths: ['src/common/scss'].map((d) => path.join(__dirname, d)).map((g) => glob.sync(g)).reduce((a, c) => a.concat(c), [])
+                }
+              }
+            ]
+          })
+          : [
+            {
+              loader: 'style-loader'
+            }, {
+              loader: "css-loader"
+            }, {
+              loader: "sass-loader",
+              options: {
+                includePaths: ['src/common/scss'].map((d) => path.join(__dirname, d)).map((g) => glob.sync(g)).reduce((a, c) => a.concat(c), [])
+              }
             }
-          }
-        ]
+          ]
+      }, {
+        test: /\.less$/,
+        use: process.env.NODE_ENV !== 'development'
+          ? ExtractStyles.extract({
+            use: [
+              {
+                loader: "css-loader"
+              }, {
+                loader: "less-loader",
+                options: {
+                  includePaths: ['src/common/less'].map((d) => path.join(__dirname, d)).map((g) => glob.sync(g)).reduce((a, c) => a.concat(c), [])
+                }
+              }
+            ]
+          })
+          : [
+            {
+              loader: 'style-loader'
+            }, {
+              loader: "css-loader"
+            }, {
+              loader: "less-loader",
+              options: {
+                includePaths: ['src/common/less'].map((d) => path.join(__dirname, d)).map((g) => glob.sync(g)).reduce((a, c) => a.concat(c), [])
+              }
+            }
+          ]
       }, {
         test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
         loader: 'url-loader'
@@ -106,6 +150,7 @@ module.exports = {
     ]
   },
   plugins: [
+    ExtractStyles,
     new CopyWebpackPlugin([
       // Copy directory contents to {output}/to/directory/
       {
