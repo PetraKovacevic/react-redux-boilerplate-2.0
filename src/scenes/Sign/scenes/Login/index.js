@@ -9,14 +9,14 @@ class Login extends React.Component {
 
     handleSubmit = (username, password) => {
         this.props.signIn(username, password);
-    }
+    };
 
     render() {
         return (
             <Row>
                 <Col sm={12}>
                     Login page... insert your imported form component here
-                    <LoginForm handleSubmit={this.handleSubmit} />
+                    <LoginForm onSubmit={this.handleSubmit} disableButton={this.props.isUserSigningIn} />
                 </Col>
             </Row>
         );
@@ -25,7 +25,7 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.user
+        isUserSigningIn: state.sign.login.isUserSigningIn
     };
 };
 
@@ -37,4 +37,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

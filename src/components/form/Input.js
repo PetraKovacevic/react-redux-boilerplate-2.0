@@ -30,7 +30,6 @@ class InputField extends React.Component {
                 <div className={wrapInputClass}>
                     <input {...input} id={this.state.controlId} className={className} />
                     {inputHelp && <span id="helpBlock" className="help-block">{inputHelp}</span>}
-                    {touched && error && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
                     {touched && error && <span className="help-block has-error">{error}</span>}
                 </div>
             </div>

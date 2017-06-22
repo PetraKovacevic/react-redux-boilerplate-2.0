@@ -1,13 +1,13 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 import _ from 'lodash';
 
-import session from '../../index';
+import session from '@/services/session';
 
-import { updateCurrentUserState, signOutUser, refreshToken } from '../../actions';
-import { getToken, isTokenValid, shouldRefreshToken } from '../token';
+import { updateCurrentUserState, unauthenticate, refreshToken } from '@/services/session/actions';
 
 import {
     START_REFRESHING_AUTH_TOKEN,
@@ -27,17 +27,18 @@ export default function(ComposedComponent) {
         componentWillMount() {
             if (!this.props.authenticated) {
                 // If token exists, update application state
-                const token = getToken();
+                const token = session.getToken();
                 const user = getCurrentUserDetails();
 
-                if ( token && isTokenValid() && user ) {
+                if ( token && session.isTokenValid() && user ) {
                     // Update the user details from local storage to redux
                     this.props.updateCurrentUserState(user);
 
                     // Refreshes the token
                     this.refreshToken();
                 } else {
-                    this.props.signOutUser();
+                    this.props.unauthenticate();
+                    browserHistory.push('/signin');
                 }
             }
         }
@@ -45,8 +46,9 @@ export default function(ComposedComponent) {
         componentWillUpdate(nextProps) {
             // If the user is not authenticated, there is no token or the token is invalid, sign out the user and redirect
             // to the sign in page
-            if (!nextProps.authenticated || !getToken() || !isTokenValid()) {
-                this.props.signOutUser();
+            if (!nextProps.authenticated || !session.getToken() || !session.isTokenValid()) {
+                this.props.unauthenticate();
+                browserHistory.push('/signin');
                 return;
             }
 
@@ -61,7 +63,7 @@ export default function(ComposedComponent) {
         refreshToken = () => {
             return new Promise((resolve, reject) => {
                 // Request a token refresh, but only if a request has not been sent yet
-                if (!this.props.isRefreshingToken && shouldRefreshToken()) {
+                if (!this.props.isRefreshingToken && session.shouldRefreshToken()) {
                     // Sets isRefreshingToken to true
                     this.props.startRefreshToken();
 
@@ -115,8 +117,8 @@ export default function(ComposedComponent) {
             updateCurrentUserState: (user) => {
                 dispatch(updateCurrentUserState(user));
             },
-            signOutUser: () => {
-                dispatch(signOutUser());
+            unauthenticate: () => {
+                dispatch(unauthenticate());
             },
             startRefreshToken: () => {
                 dispatch({ type: START_REFRESHING_AUTH_TOKEN });
