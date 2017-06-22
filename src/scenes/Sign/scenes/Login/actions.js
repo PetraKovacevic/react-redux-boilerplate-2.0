@@ -1,39 +1,43 @@
+import { browserHistory } from 'react-router';
+
 import * as api from './api';
-import { authSuccess, authError } from '@/services/session/actions';
 import { USER_SIGNING_IN } from './types';
 
-export function isSiginingIn(signingIn) {
+import { authSuccess, authError } from '@/services/session/actions';
+
+export function isSigningIn(signingIn) {
     return {
         type: USER_SIGNING_IN,
         payload: {
-            isSiginingIn: signingIn
+            isSigningIn: signingIn
         }
     };
 }
 
-export function signIn({ email, password }) {
+export function signIn(email, password) {
     return function (dispatch) {
 
         // Let the pages know that the user is being loaded
-        dispatch(isSiginingIn(true));
+        dispatch(isSigningIn(true));
 
         // Submit email/password to server
-        api.signIn(email, password)
+        api.authenticate(email, password)
             .then(response => {
                 let redirect = '/my-details';
+
                 dispatch(authSuccess(
-                    response,
-                    {
-                        user: {
-                            userType: 'test'
-                        }
-                    },
-                    redirect
+                    response.data.token,
+                    response.data.data.user
                 ));
-                dispatch(isSiginingIn(false));
+
+                dispatch(isSigningIn(false));
+
+                // Redirect to a page...
+                browserHistory.push(redirect);
             })
             .catch(response => {
-                dispatch(isSiginingIn(false));
+                dispatch(isSigningIn(false));
+
                 if (typeof response.data.message !== 'undefined') {
                     dispatch(authError(response.data.message));
                     return;

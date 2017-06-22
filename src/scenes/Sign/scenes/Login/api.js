@@ -1,3 +1,3 @@
 import * as session from '@/services/session';
 
-export const signIn = (username, password) => session.authenticate(username, password);
+export const authenticate = (username, password) => session.authenticate(username, password);

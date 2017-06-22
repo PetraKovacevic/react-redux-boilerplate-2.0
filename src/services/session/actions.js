@@ -27,9 +27,8 @@ export function authError(error, registrationErrors = '') {
     };
 }
 
-export function authSuccess(token, user, redirect = '/my-details') {
+export function authSuccess(token, user) {
     return function (dispatch) {
-
         dispatch({
             type: AUTH_SUCCESS,
             payload: {
@@ -40,12 +39,7 @@ export function authSuccess(token, user, redirect = '/my-details') {
 
         // Save JWT token and user details to local storage
         localStorage.setItem('token', token);
-        localStorage.setItem('currentUserDetails', JSON.stringify({ user }));
-
-        // Redirect to a page...
-        if (redirect) {
-            browserHistory.push(redirect);
-        }
+        localStorage.setItem('currentUserDetails', JSON.stringify(user));
     };
 }
 

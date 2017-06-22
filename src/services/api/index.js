@@ -11,8 +11,8 @@ export default class APIUtil {
         return head(path, this.root);
     }
 
-    get(path, params) {
-        return get(path, params, this.root);
+    get(path, config) {
+        return get(path, config, this.root);
     }
 
     post(path, data, config) {
@@ -48,8 +48,8 @@ export function head(path, root = appConfig.apiUrl) {
  * @param path
  * @returns {*}
  */
-export function get(path, params, root = appConfig.apiUrl) {
-    return axios.get(`${root}/${path}`, { params });
+export function get(path, config = {}, root = appConfig.apiUrl) {
+    return axios.get(`${root}/${path}`, config);
 }
 
 /**

@@ -1,5 +1,15 @@
 import React from 'react';
+import { reduxForm, Field } from 'redux-form';
 import { func } from 'prop-types';
+import { strings, getString } from '@/strings';
+import InputField from '@/components/form/Input';
+
+import { createValidator, required } from '@/utils/validation';
+
+const signInValidation = createValidator({
+    username: [required],
+    password: [required]
+});
 
 class LoginForm extends React.Component {
 
@@ -7,57 +17,42 @@ class LoginForm extends React.Component {
         super(props);
     }
 
-    state = {
-        username: '',
-        password: ''
-    }
-
-    handleUsernameUpdate = event => {
-        this.setState({
-            username: event.target.value
-        });
-    }
-
-    handlePasswordUpdate = event => {
-        this.setState({
-            password: event.target.value
-        });
-    }
-
-    submit = () => {
-        const { username, password } = this.state;
-        this.props.handleSubmit(username, password);
-    }
-
     render() {
         return (
-            <div>
+            <form onSubmit={this.props.handleSubmit} >
                 <div>
-                    <input
-                        type='text'
+                    <Field
                         placeholder='Username'
-                        value={this.state.username}
-                        onChange={this.handleUsernameUpdate}
+                        name="username"
+                        component={ InputField }
+                        type="text"
+                        label={ getString(strings.usernameLabel) }
                     />
                 </div>
                 <div>
-                    <input
-                        type='password'
-                        value={this.state.password}
-                        onChange={this.handlePasswordUpdate}
-                    />
+                    <Field
+                        name="password"
+                        component={ InputField }
+                        type="password"
+                        label={ getString(strings.passwordLabel) } />
                 </div>
                 <div>
-                    <button onTouchTap={this.submit}>Login</button>
+                    <button type="submit" disabled={this.props.disableButton}>Login</button>
                 </div>
-            </div>
+            </form>
         );
     }
 }
+
+LoginForm.defaultProps = {
+    disableButton: false
+};
 
 LoginForm.propTypes = {
     handleSubmit: func.isRequired
 };
 
-
-export default LoginForm;
+export default reduxForm({
+    form: 'signIn',
+    validate: signInValidation
+})(LoginForm);

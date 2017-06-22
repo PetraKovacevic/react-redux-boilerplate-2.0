@@ -1,3 +1,3 @@
 export default {
-    apiUrl: 'http://your-url-here.com'
+    apiUrl: 'https://private-375849-apiboilerplate.apiary-mock.com'
 };
