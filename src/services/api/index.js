@@ -77,10 +77,12 @@ export function put(path, data, config = {}, root = appConfig.apiUrl) {
 }
 
 /**
+ * Patch request
  *
  * @param path
  * @param data
  * @param config
+ * @param root
  * @returns {axios.Promise}
  */
 export function patch(path, data, config = {}, root = appConfig.apiUrl) {
@@ -92,9 +94,10 @@ export function patch(path, data, config = {}, root = appConfig.apiUrl) {
  *
  * @param path
  * @param data
+ * @param root
  * @returns {axios.Promise}
  */
-export function remove(path, data = null) {
+export function remove(path, data = null, root = appConfig.apiUrl) {
     let config = {
         data: data
     };

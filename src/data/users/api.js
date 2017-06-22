@@ -11,7 +11,7 @@ const endPoints = {
     put: 'users'
 };
 
-export function get() { return api.get(endPoints.get); };
+export function get() { return api.get(endPoints.get); }
 export function getUser(uuid) { return api.get(`${endPoints.get}/${uuid}`); }
 export function checkUniqueEmail(email) { return api.head(`${endPoints.check}/${encodeURIComponent(email)}/email`); }
 export function updateUser(userUuid, data) { return api.patch(`${endPoints.update}/${userUuid}`, data); }
@@ -25,4 +25,4 @@ export function create(data) {
         data.password = generatePassword();
     }
     return api.post(endPoints.create, data);
-};
+}

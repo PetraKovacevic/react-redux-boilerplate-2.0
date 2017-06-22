@@ -26,4 +26,4 @@ export const reducer = (state = initialState, action) => {
             return { ...state, isRefreshingToken: false };
     }
     return state;
-}
+};

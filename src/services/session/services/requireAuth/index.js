@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 
 import _ from 'lodash';
 
-import session from '../index';
+import session from '../../index';
 
-import { updateCurrentUserState, signOutUser, refreshToken } from '../actions';
+import { updateCurrentUserState, signOutUser, refreshToken } from '../../actions';
 import { getToken, isTokenValid, shouldRefreshToken } from '../token';
 
 import {
     START_REFRESHING_AUTH_TOKEN,
     STOP_REFRESHING_AUTH_TOKEN
-} from '../types';
+} from '../../types';
 
 const getCurrentUserDetails = () => {
     return JSON.parse(localStorage.getItem('currentUserDetails'));

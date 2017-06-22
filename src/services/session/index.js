@@ -60,5 +60,5 @@ export const configureAxios = (store) => {
 
         return Promise.reject(error);
     });
-}
+};
 
