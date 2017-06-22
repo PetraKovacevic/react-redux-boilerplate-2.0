@@ -12,8 +12,8 @@ module.exports = (
         <Route path="/" component={App} >
             <IndexRoute title="Home" component={Home} />
             <Route path="about-us" title="About Us" component={AboutUs} />
-            <Route path="login" title="Login" component={Login} />
         </Route>
+        <Route path="login" title="Login" component={Login} />
         <Route path="*" component={Error404} status={404} />
     </Router>
 );
