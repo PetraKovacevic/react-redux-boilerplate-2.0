@@ -1,4 +1,4 @@
-import {reducer as userReducer} from '../reducer';
+import { reducer as userReducer } from '../reducer';
 import * as types from '../types';
 
 describe('User reducer', () => {

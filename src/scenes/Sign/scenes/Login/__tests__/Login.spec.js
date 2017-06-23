@@ -12,7 +12,13 @@ describe('Login page', function () {
     let store, container;
 
     beforeEach(() => {
-        store = mockStore({});
+        store = mockStore({
+            sign: {
+                login: {
+                    isUserSigningIn: false
+                }
+            }
+        });
         container = shallow(<Login store={store} />);
     });
 
