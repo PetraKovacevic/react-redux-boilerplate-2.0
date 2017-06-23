@@ -24,13 +24,13 @@ class Login extends React.Component {
     }
 }
 
-LoginForm.defaultProps = {
+Login.defaultProps = {
     isUserSigningIn: false
 };
 
-LoginForm.propTypes = {
+Login.propTypes = {
     signIn: func.isRequired,
-    isUserSigningIn: bool
+    isUserSigningIn: bool.isRequired
 };
 
 const mapStateToProps = state => {
