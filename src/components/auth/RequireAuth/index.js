@@ -6,55 +6,55 @@ import { browserHistory } from 'react-router';
 import _ from 'lodash';
 
 import * as session from '@/services/session';
+import * as userStorage from '@/data/users/services/storage';
 import { redirect } from '@/services/redirect';
-
-import {
-    unauthenticate,
-    refreshToken,
-    startRefreshingToken,
-    stopRefreshingToken
-} from '@/services/session/actions';
-
-import { updateSignedInUserDetails } from '@/data/users/actions';
-
 import { redirects } from '@/config';
 
-const getCurrentUserDetails = () => {
-    return JSON.parse(localStorage.getItem('currentUserDetails'));
-};
+import {
+unauthenticate,
+refreshToken,
+startRefreshingToken,
+stopRefreshingToken,
+authSuccess
+} from '@/services/session/actions';
+
+import { updateCurrentUserDetails } from '@/data/users/actions';
 
 export default function(ComposedComponent) {
     class Authentication extends React.Component {
-        static contextTypes = {
-            router: PropTypes.object
-        };
-
         componentWillMount() {
-            if (!this.props.authenticated) {
-                debugger;
-                // If token exists, update application state
+            // First check if we are authenticated in redux
+            if (this.props.authenticated) {
+                return;
+            }
+
+            // If we are not authenticated in redux (page refresh), check storage.
+            // If token exists, update application state.
+            if (session.isAuthenticated()) {
                 const token = session.getToken();
-                const user = getCurrentUserDetails();
+                const user = userStorage.getCurrentUser();
 
-                if ( token && session.isTokenValid(token) && user ) {
-                    // Update the user details from local storage to redux
-                    this.props.updateSignedInUserDetails(user);
+                // todo: if the user doesn't exist in storage you might want to fetch the details again
 
-                    // Refreshes the token
-                    this.refreshToken();
-                } else {
-                    this.props.unauthenticate();
-                    redirect(redirects.unathenticate);
-                }
+                this.props.authSuccess(token);
+
+                // Update the user details from local storage to redux
+                this.props.updateCurrentUserDetails(user);
+
+                // Refreshes the token
+                this.refreshToken();
+            } else {
+                this.props.unauthenticate();
+                redirect(redirects.unathenticated);
             }
         }
 
         componentWillUpdate(nextProps) {
             // If the user is not authenticated, there is no token or the token is invalid, sign out the user and redirect
             // to the sign in page
-            if (!nextProps.authenticated || !session.getToken() || !session.isTokenValid()) {
+            if (!nextProps.authenticated || !session.isAuthenticated()) {
                 this.props.unauthenticate();
-                redirect(redirects.unathenticate);
+                redirect(redirects.unathenticated);
                 return;
             }
 
@@ -68,15 +68,18 @@ export default function(ComposedComponent) {
 
         refreshToken = () => {
             return new Promise((resolve, reject) => {
+                
+                const token = session.getToken();
+
                 // Request a token refresh, but only if a request has not been sent yet
-                if (!this.props.isRefreshingToken && session.shouldRefreshToken()) {
+                if (!this.props.isRefreshingToken && session.shouldRefreshToken(token)) {
                     // Sets isRefreshingToken to true
                     this.props.startRefreshingToken();
 
                     session.refreshToken()
                         .then(response => {
                             // Save new token to local storage
-                            localStorage.setItem('token', response.data.token);
+                            session.setToken(response.data.token);
 
                             // Sets isRefreshingToken to false
                             this.props.stopRefreshingToken();
@@ -100,7 +103,6 @@ export default function(ComposedComponent) {
         render() {
             return (
                 <div>
-
                     { // Don't render component if token is being refreshed
                         this.props.authenticated && !this.props.isRefreshingToken
                         ? <ComposedComponent {...this.props} />
@@ -120,8 +122,8 @@ export default function(ComposedComponent) {
 
     const mapDispatchToProps = (dispatch) => {
         return {
-            updateSignedInUserDetails: (user) => {
-                dispatch(updateSignedInUserDetails(user));
+            updateCurrentUserDetails: (user) => {
+                dispatch(updateCurrentUserDetails(user));
             },
             unauthenticate: () => {
                 dispatch(unauthenticate());
@@ -131,6 +133,9 @@ export default function(ComposedComponent) {
             },
             stopRefreshingToken: () => {
                 dispatch(stopRefreshingToken());
+            },
+            authSuccess: (token) => {
+                dispatch(authSuccess(token));
             }
         };
     };

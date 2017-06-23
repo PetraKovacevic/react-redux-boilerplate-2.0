@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import * as api from '@/services/api';
 import store from '@/store';
+import * as storage from '@/services/storage';
 
 const apiEndpoints = {
     auth: 'auth/jwt/login',
@@ -23,7 +24,7 @@ export function getToken() {
         return token;
     }
     // if not in Redux, try and grab it from local storage
-    token = localStorage.getItem('token');
+    token = storage.get('token');
     if (!!token) {
         return token;
     }
@@ -64,13 +65,11 @@ export function isTokenValid(token) {
  *
  * @returns {boolean}
  */
-export function shouldRefreshToken() {
-    let token = localStorage.getItem('token');
-
+export function shouldRefreshToken(token) {
     if (token) {
 
         try {
-            let decoded = jwtDecode(localStorage.getItem('token'));
+            let decoded = jwtDecode(token);
 
             if (typeof decoded.exp === 'undefined') {
                 return false;
@@ -116,6 +115,10 @@ export const authenticate = (username, password) => {
     };
 
     return api.get(apiEndpoints.auth, config);
+};
+
+export const isAuthenticated = () => {
+    return isTokenValid(getToken());
 };
 
 /**

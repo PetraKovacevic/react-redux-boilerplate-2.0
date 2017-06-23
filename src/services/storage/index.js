@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import { isJsonString } from '@/utils';
+import { isJsonString } from '@/utils/json';
 import { clearErrors, retrieveError, storageError } from './actions';
 
 /**
  * Retrieve data from local storage
+ *
  * @param {string} key
  * @param {function} dispatch
  * @return {object|string}
@@ -19,6 +20,7 @@ export function get(key, dispatch = () => { }) {
 
 /**
  * Put data into local storage
+ *
  * @param {string} key
  * @param {*} value
  * @param {function} dispatch
@@ -35,4 +37,13 @@ export function set(key, value, dispatch = () => { }) {
     } catch (error) {
         dispatch(storageError(error));
     }
+}
+
+/**
+ * Remove key/value from local storage
+ * 
+ * @param key
+ */
+export function remove(key) {
+    localStorage.removeItem(key);
 }

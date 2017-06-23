@@ -6,7 +6,18 @@ import { func, bool } from 'prop-types';
 import { signIn } from './actions';
 import LoginForm from './components/LoginForm';
 
+import * as session from '@/services/session';
+import { redirect } from '@/services/redirect';
+import { redirects } from '@/config';
+
 class Login extends React.Component {
+
+    componentWillMount() {
+        // If token exists, update application state
+        if (session.isAuthenticated()) {
+            redirect(redirects.authenticated);
+        }
+    }
 
     handleSubmit = (username, password) => {
         this.props.signIn(username, password);

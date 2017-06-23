@@ -1,4 +1,4 @@
-import { isJsonString } from '@/utils/json';
+import { isJsonString } from '../json';
 
 describe('JSON util', () => {
 

@@ -15,8 +15,8 @@ module.exports = (
             <IndexRoute title="Home" component={Home} />
             <Route path="about-us" title="About Us" component={AboutUs} />
             <Route path="login" title="Login" component={Login} />
+            <Route path="dashboard" title="Dashboard" component={RequireAuth(Dashboard)} />
         </Route>
-        <Route path="dashboard" title="Dashboard" component={RequireAuth(Dashboard)} />
         <Route path="*" component={Error404} status={404} />
     </Router>
 );

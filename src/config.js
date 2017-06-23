@@ -4,8 +4,8 @@
  */
 
 export const redirects = {
-    loginSuccess: '/dashboard',
-    unathenticate: '/login'
+    authenticated: '/dashboard',
+    unathenticated: '/login'
 };
 
 const config = {
