@@ -8,13 +8,13 @@ import {
  * Register that an error has occurred with authentication.
  *
  * @param error
- * @returns {{type, payload: {authError: *}}}
+ * @returns {{type, payload: {error: *}}}
  */
 export function authError(error) {
     return {
         type: AUTH_ERROR,
         payload: {
-            authError: error
+            error
         }
     };
 }
