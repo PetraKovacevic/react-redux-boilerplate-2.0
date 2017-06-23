@@ -1,0 +1,3 @@
+export const ERROR_RETRIEVING_DATA = 'storage/ERROR_RETRIEVING_DATA';
+export const ERROR_STORING_DATA = 'storage/ERROR_STORING_DATA';
+export const CLEAR_STORAGE_ERRORS = 'storage/CLEAR_STORAGE_ERRORS';
