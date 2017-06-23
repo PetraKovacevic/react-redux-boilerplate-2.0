@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { strings, getString } from '@/strings';
 import InputField from '@/components/form/Input';
 
@@ -49,7 +49,8 @@ LoginForm.defaultProps = {
 };
 
 LoginForm.propTypes = {
-    handleSubmit: func.isRequired
+    handleSubmit: func.isRequired,
+    disableButton: bool
 };
 
 export default reduxForm({

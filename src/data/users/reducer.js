@@ -1,11 +1,13 @@
 import {
     FETCHING_USERS,
-    UPDATE_USERS
+    UPDATE_USERS,
+    UPDATE_SIGNED_IN_USER
 } from './types';
 
 const initialState = {
     fetching: false,
-    list: []
+    list: [],
+    signedInUser: {}
 };
 
 export const reducer = (state = initialState, action) => {
@@ -14,6 +16,8 @@ export const reducer = (state = initialState, action) => {
             return { ...state, fetching: action.payload.fetching };
         case UPDATE_USERS:
             return { ...state, list: action.payload.users };
+        case UPDATE_SIGNED_IN_USER:
+            return { ...state, signedInUser: action.payload.user};
     }
     return state;
 };

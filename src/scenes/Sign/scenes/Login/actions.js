@@ -4,6 +4,7 @@ import * as api from './api';
 import { USER_SIGNING_IN } from './types';
 
 import { authSuccess, authError } from '@/services/session/actions';
+import { updateSignedInUserDetails } from '@/data/users/actions';
 
 export function isSigningIn(signingIn) {
     return {
@@ -25,10 +26,11 @@ export function signIn(email, password) {
             .then(response => {
                 let redirect = '/my-details';
 
-                dispatch(authSuccess(
-                    response.data.token,
-                    response.data.data.user
-                ));
+                // User was successfully authenticated, let redux know
+                dispatch(authSuccess(response.data.token));
+
+                // Save user details to redux store
+                dispatch(updateSignedInUserDetails(response.data.data.user));
 
                 dispatch(isSigningIn(false));
 

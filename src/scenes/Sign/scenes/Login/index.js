@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
+import { func, bool } from 'prop-types';
 
 import { signIn } from './actions';
 import LoginForm from './components/LoginForm';
@@ -22,6 +23,15 @@ class Login extends React.Component {
         );
     }
 }
+
+LoginForm.defaultProps = {
+    isUserSigningIn: false
+};
+
+LoginForm.propTypes = {
+    signIn: func.isRequired,
+    isUserSigningIn: bool
+};
 
 const mapStateToProps = state => {
     return {

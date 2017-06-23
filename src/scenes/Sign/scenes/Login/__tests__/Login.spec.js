@@ -4,15 +4,19 @@ import configureStore from 'redux-mock-store';
 
 import Login from '../index';
 
-
-
 describe('Login page', function () {
 
     const mockStore = configureStore();
     let store, container;
 
     beforeEach(() => {
-        store = mockStore({});
+        store = mockStore({
+            sign: {
+                login: {
+                    isUserSigningIn: false
+                }
+            }
+        });
         container = shallow(<Login store={store} />);
     });
 
