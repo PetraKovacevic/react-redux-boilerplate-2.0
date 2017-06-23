@@ -2,10 +2,11 @@ import {
     AUTH_SUCCESS,
     AUTH_ERROR,
     UNAUTH_USER,
-    DID_CHANGE_PASSWORD,
-    RESET_DID_CHANGE_PASSWORD,
-    USER_SIGNING_IN,
-    USER_SIGNING_OUT
+    SET_TOKEN,
+    DELETE_TOKEN,
+    START_REFRESHING_AUTH_TOKEN,
+    STOP_REFRESHING_AUTH_TOKEN,
+    LOCAL_STORAGE_TOKEN_SET_FAIL
 } from './types';
 
 export function authError(error) {
@@ -19,63 +20,48 @@ export function authError(error) {
 
 export function authSuccess(token, user) {
     return function (dispatch) {
-        dispatch({
-            type: AUTH_SUCCESS,
-            payload: {
-                user,
-                token
-            }
-        });
-
-        // Save JWT token and user details to local storage
-        localStorage.setItem('token', token);
+        dispatch({ type: AUTH_SUCCESS });
+        dispatch(addToken(token));
     };
 }
 
 export function addToken(token) {
-
+    return {
+        type: SET_TOKEN,
+        payload: { token }
+    };
 }
 
 export function removeToken() {
+    return {
+        type: DELETE_TOKEN
+    };
+}
 
+export function startRefreshingToken() {
+    return {
+        type: START_REFRESHING_AUTH_TOKEN
+    };
+}
+
+export function stopRefreshingToken() {
+    return {
+        type: STOP_REFRESHING_AUTH_TOKEN
+    };
+}
+
+export function localStorageTokenFail(error) {
+    return {
+        type: LOCAL_STORAGE_TOKEN_SET_FAIL,
+        payload: {
+            localStorageError: error
+        }
+    };
 }
 
 export function unauthenticate(shouldRedirect = true) {
     return function (dispatch) {
         dispatch({ type: UNAUTH_USER });
-        localStorage.removeItem('token');
-    };
-}
-
-export function updateAuthUserState(updatedUser) {
-
-    // Update auth state and user details in state
-    let
-        userDetails = getCurrentUserDetails(),
-        user = userDetails.user
-        ;
-
-    user = { ...user, ...updatedUser };
-    userDetails = { ...userDetails, user };
-
-    localStorage.setItem('currentUserDetails', JSON.stringify(userDetails));
-    return { type: AUTH_SUCCESS, payload: userDetails };
-}
-
-export function updateCurrentUserState(user) {
-    localStorage.setItem('currentUserDetails', JSON.stringify(user));
-    return { type: AUTH_SUCCESS, payload: user };
-}
-
-
-export function didChangePassword() {
-    return {
-        type: DID_CHANGE_PASSWORD
-    };
-}
-
-export function resetDidChangePassword() {
-    return {
-        type: RESET_DID_CHANGE_PASSWORD
+        dispatch(removeToken());
     };
 }

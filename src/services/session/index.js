@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import * as api from '@/services/api';
 import store from '@/store';
+import { addToken, localStorageTokenFail } from './actions';
 
 const apiEndpoints = {
     auth: 'auth/jwt/login',
@@ -10,7 +11,7 @@ const apiEndpoints = {
 };
 
 /**
- * @returns {string}
+ * @returns {boolean}
  */
 export function getToken() {
 
@@ -35,10 +36,13 @@ export function getToken() {
 
 export function setToken(token) {
     try {
+        // Local Storage
         localStorage.setItem('token', token);
-        //actions.setToken(token);
+        // Redux
+        addToken(token);
     } catch (error) {
         // dispatch action alerting user to failure
+        localStorageTokenFail(error);
     }
 }
 
@@ -84,7 +88,7 @@ export function shouldRefreshToken() {
         try {
             let decoded = jwtDecode(localStorage.getItem('token'));
 
-            if (typeof decoded.exp === "undefined") {
+            if (typeof decoded.exp === 'undefined') {
                 return false;
             }
 
