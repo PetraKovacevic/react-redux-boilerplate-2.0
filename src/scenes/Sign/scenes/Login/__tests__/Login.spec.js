@@ -4,8 +4,6 @@ import configureStore from 'redux-mock-store';
 
 import Login from '../index';
 
-
-
 describe('Login page', function () {
 
     const mockStore = configureStore();

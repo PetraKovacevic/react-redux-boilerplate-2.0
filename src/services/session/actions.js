@@ -9,6 +9,12 @@ import {
     LOCAL_STORAGE_TOKEN_SET_FAIL
 } from './types';
 
+/**
+ * Register that an error has occurred with authentication.
+ *
+ * @param error
+ * @returns {{type, payload: {error: *}}}
+ */
 export function authError(error) {
     return {
         type: AUTH_ERROR,
@@ -18,7 +24,7 @@ export function authError(error) {
     };
 }
 
-export function authSuccess(token, user) {
+export function authSuccess(token) {
     return function (dispatch) {
         dispatch({ type: AUTH_SUCCESS });
         dispatch(addToken(token));
