@@ -2,7 +2,6 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import sample from './img/sample.png';
-
 import './styles.scss';
 
 class Home extends React.Component {

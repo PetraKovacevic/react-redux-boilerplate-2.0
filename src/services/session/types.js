@@ -2,6 +2,13 @@
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const UNAUTH_USER = 'UNAUTH_USER';
+export const SET_TOKEN = 'SET_TOKEN';
+export const DELETE_TOKEN = 'DELETE_TOKEN';
+
+
+
+
+// TODO: move this to somewhere else
 
 export const USER_SIGNING_OUT = 'USER_SIGNING_OUT';
 export const START_REFRESHING_AUTH_TOKEN = 'START_REFRESHING_AUTH_TOKEN';

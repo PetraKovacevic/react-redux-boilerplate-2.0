@@ -1,11 +1,3 @@
-
-
-// TODO: @Petra, I think we should move these, split up into the Login scene, some should live here
-// Signout can probably stay here too
-
-import _ from 'lodash';
-
-// import { generatePassword, getCurrentUserDetails, getAllowedRoutes, isRouteAllowed } from '../utils/utils';
 import {
     AUTH_SUCCESS,
     AUTH_ERROR,
@@ -16,12 +8,11 @@ import {
     USER_SIGNING_OUT
 } from './types';
 
-export function authError(error, registrationErrors = '') {
+export function authError(error) {
     return {
         type: AUTH_ERROR,
         payload: {
-            error,
-            registrationErrors
+            error
         }
     };
 }
@@ -38,8 +29,15 @@ export function authSuccess(token, user) {
 
         // Save JWT token and user details to local storage
         localStorage.setItem('token', token);
-        localStorage.setItem('currentUserDetails', JSON.stringify(user));
     };
+}
+
+export function addToken(token) {
+
+}
+
+export function removeToken() {
+
 }
 
 export function unauthenticate(shouldRedirect = true) {
