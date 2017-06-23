@@ -5,14 +5,19 @@ import { browserHistory } from 'react-router';
 
 import _ from 'lodash';
 
-import session from '@/services/session';
-
-import { updateCurrentUserState, unauthenticate, refreshToken } from '@/services/session/actions';
+import * as session from '@/services/session';
+import { redirect } from '@/services/redirect';
 
 import {
-    START_REFRESHING_AUTH_TOKEN,
-    STOP_REFRESHING_AUTH_TOKEN
-} from '../../types';
+    unauthenticate,
+    refreshToken,
+    startRefreshingToken,
+    stopRefreshingToken
+} from '@/services/session/actions';
+
+import { updateSignedInUserDetails } from '@/data/users/actions';
+
+import { redirects } from '@/config';
 
 const getCurrentUserDetails = () => {
     return JSON.parse(localStorage.getItem('currentUserDetails'));
@@ -26,19 +31,20 @@ export default function(ComposedComponent) {
 
         componentWillMount() {
             if (!this.props.authenticated) {
+                debugger;
                 // If token exists, update application state
                 const token = session.getToken();
                 const user = getCurrentUserDetails();
 
-                if ( token && session.isTokenValid() && user ) {
+                if ( token && session.isTokenValid(token) && user ) {
                     // Update the user details from local storage to redux
-                    this.props.updateCurrentUserState(user);
+                    this.props.updateSignedInUserDetails(user);
 
                     // Refreshes the token
                     this.refreshToken();
                 } else {
                     this.props.unauthenticate();
-                    browserHistory.push('/signin');
+                    redirect(redirects.unathenticate);
                 }
             }
         }
@@ -48,7 +54,7 @@ export default function(ComposedComponent) {
             // to the sign in page
             if (!nextProps.authenticated || !session.getToken() || !session.isTokenValid()) {
                 this.props.unauthenticate();
-                browserHistory.push('/signin');
+                redirect(redirects.unathenticate);
                 return;
             }
 
@@ -65,7 +71,7 @@ export default function(ComposedComponent) {
                 // Request a token refresh, but only if a request has not been sent yet
                 if (!this.props.isRefreshingToken && session.shouldRefreshToken()) {
                     // Sets isRefreshingToken to true
-                    this.props.startRefreshToken();
+                    this.props.startRefreshingToken();
 
                     session.refreshToken()
                         .then(response => {
@@ -73,14 +79,14 @@ export default function(ComposedComponent) {
                             localStorage.setItem('token', response.data.token);
 
                             // Sets isRefreshingToken to false
-                            this.props.stopRefreshToken();
+                            this.props.stopRefreshingToken();
 
                             // Resolve the promise
                             resolve("Refresh Token Success");
                         })
                         .catch(error => {
                             // Sets isRefreshingToken to false
-                            this.props.stopRefreshToken();
+                            this.props.stopRefreshingToken();
 
                             // Reject the promise
                             reject(error);
@@ -107,24 +113,24 @@ export default function(ComposedComponent) {
 
     const mapStateToProps = state => {
         return {
-            authenticated: state.auth.authenticated,
-            isRefreshingToken: state.auth.isRefreshingToken
+            authenticated: state.services.session.authenticated,
+            isRefreshingToken: state.services.session.isRefreshingToken
         };
     };
 
     const mapDispatchToProps = (dispatch) => {
         return {
-            updateCurrentUserState: (user) => {
-                dispatch(updateCurrentUserState(user));
+            updateSignedInUserDetails: (user) => {
+                dispatch(updateSignedInUserDetails(user));
             },
             unauthenticate: () => {
                 dispatch(unauthenticate());
             },
-            startRefreshToken: () => {
-                dispatch({ type: START_REFRESHING_AUTH_TOKEN });
+            startRefreshingToken: () => {
+                dispatch(startRefreshingToken());
             },
-            stopRefreshToken: () => {
-                dispatch({type: STOP_REFRESHING_AUTH_TOKEN});
+            stopRefreshingToken: () => {
+                dispatch(stopRefreshingToken());
             }
         };
     };

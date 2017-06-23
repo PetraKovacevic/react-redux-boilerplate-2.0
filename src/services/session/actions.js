@@ -13,7 +13,7 @@ import {
  * Register that an error has occurred with authentication.
  *
  * @param error
- * @returns {{type, payload: {error: *}}}
+ * @returns {object}
  */
 export function authError(error) {
     return {
@@ -28,6 +28,9 @@ export function authSuccess(token) {
     return function (dispatch) {
         dispatch({ type: AUTH_SUCCESS });
         dispatch(addToken(token));
+        localStorage.setItem('token', token);
+
+        // storage.set('token', token);
     };
 }
 

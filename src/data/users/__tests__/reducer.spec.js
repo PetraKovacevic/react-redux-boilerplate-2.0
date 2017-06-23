@@ -7,7 +7,8 @@ describe('User reducer', () => {
     beforeEach(() => {
         state = {
             fetching: false,
-            list: []
+            list: [],
+            signedInUser: {}
         };
     });
 
@@ -34,7 +35,8 @@ describe('User reducer', () => {
 
         const expectedResult = {
             fetching: false,
-            list: users
+            list: users,
+            signedInUser: {}
         };
 
         expect(userReducer(state, action)).toEqual(expectedResult);

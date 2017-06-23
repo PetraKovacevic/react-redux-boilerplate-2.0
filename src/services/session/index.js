@@ -3,7 +3,6 @@ import jwtDecode from 'jwt-decode';
 
 import * as api from '@/services/api';
 import store from '@/store';
-import { addToken, localStorageTokenFail } from './actions';
 
 const apiEndpoints = {
     auth: 'auth/jwt/login',
@@ -11,7 +10,8 @@ const apiEndpoints = {
 };
 
 /**
- * @returns {boolean}
+ * Retrieves the token from either Redux of Local Storage
+ * @returns {boolean|string}
  */
 export function getToken() {
 
@@ -28,22 +28,6 @@ export function getToken() {
         return token;
     }
     return false;
-}
-
-/**
- *
- */
-
-export function setToken(token) {
-    try {
-        // Local Storage
-        localStorage.setItem('token', token);
-        // Redux
-        addToken(token);
-    } catch (error) {
-        // dispatch action alerting user to failure
-        localStorageTokenFail(error);
-    }
 }
 
 /**
@@ -135,7 +119,7 @@ export const authenticate = (username, password) => {
 };
 
 /**
- * Set up interceptors on axios.
+ * Set up interceptors on Axios
  *
  * @param store
  */

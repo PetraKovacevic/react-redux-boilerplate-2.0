@@ -6,6 +6,8 @@ import AboutUs from '@/scenes/AboutUs';
 import Home from '@/scenes/Home';
 import Error404 from '@/scenes/Error404';
 import Login from '@/scenes/Sign/scenes/Login';
+import RequireAuth from '@/components/auth/RequireAuth';
+import Dashboard from '@/scenes/Dashboard';
 
 module.exports = (
     <Router history={browserHistory}>
@@ -14,6 +16,7 @@ module.exports = (
             <Route path="about-us" title="About Us" component={AboutUs} />
             <Route path="login" title="Login" component={Login} />
         </Route>
+        <Route path="dashboard" title="Dashboard" component={RequireAuth(Dashboard)} />
         <Route path="*" component={Error404} status={404} />
     </Router>
 );
