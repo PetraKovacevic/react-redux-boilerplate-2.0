@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
+import { bool } from 'prop-types';
 
 import { unauthenticate } from '@/services/session/actions';
 import { redirect } from '@/services/redirect';
@@ -15,6 +16,10 @@ const signOut = props => {
 
 export const LogOutButton = props => {
     return props.authenticated ? <Button onTouchTap={() => { signOut(props); }} >Log Out</Button> : null;
+};
+
+LogOutButton.propTypes = {
+    authenticated: bool
 };
 
 const mapStateToProps = (state) => {
