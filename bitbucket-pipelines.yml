@@ -5,4 +5,5 @@ pipelines:
       - step:
           script:
             - yarn
+            - yarn run test:lint
             - yarn run test
