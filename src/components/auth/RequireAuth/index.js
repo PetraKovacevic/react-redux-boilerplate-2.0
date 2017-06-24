@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { bool, func, object } from 'prop-types';
 import { browserHistory } from 'react-router';
 
 import _ from 'lodash';
@@ -104,7 +104,7 @@ export default function (ComposedComponent) {
             return this.props.authenticated && !this.props.isRefreshingToken
                 ? <ComposedComponent {...this.props} />
                 : null
-            ;
+                ;
         }
     }
 
@@ -133,6 +133,17 @@ export default function (ComposedComponent) {
                 dispatch(authSuccess(token));
             }
         };
+    };
+
+    Authentication.propTypes = {
+        authenticated: bool.isRequired,
+        isRefreshingToken: bool.isRequired,
+        updateCurrentUserDetails: func.isRequired,
+        unauthenticate: func.isRequired,
+        startRefreshingToken: func.isRequired,
+        stopRefreshingToken: func.isRequired,
+        authSuccess: func.isRequired,
+        location: object
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(Authentication);
