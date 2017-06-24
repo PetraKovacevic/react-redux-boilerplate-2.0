@@ -20,7 +20,7 @@ export const LogOutButton = props => {
 const mapStateToProps = (state) => {
     return {
         authenticated: state.services.session.authenticated
-    }
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
         unauthenticate: () => {
             dispatch(unauthenticate());
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogOutButton);
