@@ -4,7 +4,10 @@ import * as api from './api';
 import { USER_SIGNING_IN } from './types';
 
 import { authSuccess, authError } from '@/services/session/actions';
-import { updateSignedInUserDetails } from '@/data/users/actions';
+import { updateCurrentUserDetails } from '@/data/users/actions';
+import { redirect } from '@/services/redirect';
+
+import { redirects } from '@/config';
 
 export function isSigningIn(signingIn) {
     return {
@@ -24,21 +27,22 @@ export function signIn(email, password) {
         // Submit email/password to server
         api.authenticate(email, password)
             .then(response => {
-                let redirect = '/my-details';
 
                 // User was successfully authenticated, let redux know
                 dispatch(authSuccess(response.data.token));
 
                 // Save user details to redux store
-                dispatch(updateSignedInUserDetails(response.data.data.user));
+                dispatch(updateCurrentUserDetails(response.data.data.user));
 
                 dispatch(isSigningIn(false));
 
                 // Redirect to a page...
-                browserHistory.push(redirect);
+                redirect(redirects.authenticated);
             })
             .catch(response => {
                 dispatch(isSigningIn(false));
+
+                console.log(response);
 
                 if (typeof response.data.message !== 'undefined') {
                     dispatch(authError(response.data.message));

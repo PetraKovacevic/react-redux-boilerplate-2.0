@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 import * as api from '@/services/api';
 import store from '@/store';
-import { addToken, localStorageTokenFail } from './actions';
+import * as storage from '@/services/storage';
 
 const apiEndpoints = {
     auth: 'auth/jwt/login',
@@ -11,7 +11,8 @@ const apiEndpoints = {
 };
 
 /**
- * @returns {boolean}
+ * Retrieves the token from either Redux of Local Storage
+ * @returns {boolean|string}
  */
 export function getToken() {
 
@@ -23,27 +24,11 @@ export function getToken() {
         return token;
     }
     // if not in Redux, try and grab it from local storage
-    token = localStorage.getItem('token');
+    token = storage.get('token');
     if (!!token) {
         return token;
     }
     return false;
-}
-
-/**
- *
- */
-
-export function setToken(token) {
-    try {
-        // Local Storage
-        localStorage.setItem('token', token);
-        // Redux
-        addToken(token);
-    } catch (error) {
-        // dispatch action alerting user to failure
-        localStorageTokenFail(error);
-    }
 }
 
 /**
@@ -80,13 +65,11 @@ export function isTokenValid(token) {
  *
  * @returns {boolean}
  */
-export function shouldRefreshToken() {
-    let token = localStorage.getItem('token');
-
+export function shouldRefreshToken(token) {
     if (token) {
 
         try {
-            let decoded = jwtDecode(localStorage.getItem('token'));
+            let decoded = jwtDecode(token);
 
             if (typeof decoded.exp === 'undefined') {
                 return false;
@@ -134,8 +117,12 @@ export const authenticate = (username, password) => {
     return api.get(apiEndpoints.auth, config);
 };
 
+export const isAuthenticated = () => {
+    return isTokenValid(getToken());
+};
+
 /**
- * Set up interceptors on axios.
+ * Set up interceptors on Axios
  *
  * @param store
  */

@@ -8,12 +8,12 @@ import {
     STOP_REFRESHING_AUTH_TOKEN,
     LOCAL_STORAGE_TOKEN_SET_FAIL
 } from './types';
-
+import * as storage from '@/services/storage';
 /**
  * Register that an error has occurred with authentication.
  *
  * @param error
- * @returns {{type, payload: {error: *}}}
+ * @returns {object}
  */
 export function authError(error) {
     return {
@@ -28,6 +28,7 @@ export function authSuccess(token) {
     return function (dispatch) {
         dispatch({ type: AUTH_SUCCESS });
         dispatch(addToken(token));
+        storage.set('token', token);
     };
 }
 
@@ -65,9 +66,10 @@ export function localStorageTokenFail(error) {
     };
 }
 
-export function unauthenticate(shouldRedirect = true) {
+export function unauthenticate() {
     return function (dispatch) {
         dispatch({ type: UNAUTH_USER });
         dispatch(removeToken());
+        storage.remove('token');
     };
 }

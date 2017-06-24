@@ -1,4 +1,5 @@
 import * as api from './api';
+import * as userStorage from './services/storage';
 import {
     FETCHING_USERS,
     UPDATE_USERS,
@@ -59,8 +60,8 @@ export function getUsers() {
  * @param user
  * @returns {{type, payload: {uuid: *, userType: *}}}
  */
-export function updateSignedInUserDetails(user) {
-    localStorage.setItem('currentUserDetails', JSON.stringify(user));
+export function updateCurrentUserDetails(user) {
+    userStorage.setCurrentUser(user);
 
     return {
         type: UPDATE_SIGNED_IN_USER,
