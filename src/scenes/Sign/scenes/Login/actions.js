@@ -41,9 +41,6 @@ export function signIn(email, password) {
             })
             .catch(response => {
                 dispatch(isSigningIn(false));
-
-                console.log(response);
-
                 if (typeof response.data.message !== 'undefined') {
                     dispatch(authError(response.data.message));
                     return;
