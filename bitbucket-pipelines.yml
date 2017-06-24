@@ -1,9 +1,9 @@
 image: node:8.1.2
 
 pipelines:
-  branches:
     default:
       - step:
           script:
             - yarn
+            - yarn run test:lint
             - yarn run test
