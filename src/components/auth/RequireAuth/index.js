@@ -101,15 +101,10 @@ export default function (ComposedComponent) {
         };
 
         render() {
-            return (
-                <div>
-                    { // Don't render component if token is being refreshed
-                        this.props.authenticated && !this.props.isRefreshingToken
-                            ? <ComposedComponent {...this.props} />
-                            : null
-                    }
-                </div>
-            );
+            return this.props.authenticated && !this.props.isRefreshingToken
+                ? <ComposedComponent {...this.props} />
+                : null
+            ;
         }
     }
 
