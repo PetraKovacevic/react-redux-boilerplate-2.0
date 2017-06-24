@@ -17,7 +17,6 @@ const VENDOR_LIBS = [
   'react-redux',
   'react-dom',
   'redux-thunk',
-  'redux-devtools-extension',
   'babel-polyfill',
   'react-bootstrap'
 ];
