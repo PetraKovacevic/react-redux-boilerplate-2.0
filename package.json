@@ -14,14 +14,15 @@
   },
   "jest": {
     "setupFiles": [
-      "./test/jestsetup.js"
+      "./test/jestsetup.js",
+      "./test/__mocks__/localStorage.js"
     ],
     "snapshotSerializers": [
       "./node_modules/enzyme-to-json/serializer"
     ],
     "moduleNameMapper": {
       "^.+\\.(css|scss|less)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/fileMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/__mocks__/file.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   },
@@ -96,7 +97,7 @@
     "moment": "^2.17.1",
     "node-sass": "^4.5.3",
     "prop-types": "^15.5.8",
-    "react": "^15.5.4",
+    "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.1.0",
     "react-bootstrap": "^0.31.0",
     "react-datepicker": "^0.33.0",

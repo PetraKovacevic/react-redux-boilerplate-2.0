@@ -22,13 +22,6 @@
                     "rootPathSuffix": "src"
                 }
             ]
-        ],
-        // [
-        //     "import",
-        //     {
-        //         "libraryName": "react-bootstrap",
-        //         "style": false
-        //     }
-        // ]
+        ]
     ]
 }

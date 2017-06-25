@@ -14,7 +14,11 @@ const reducers = combineReducers({
     data: dataReducer
 });
 
-const composeEnhancers = composeWithDevTools({});
-const store = createStore(reducers, composeEnhancers(applyMiddleware(ReduxThunk)));
+let store = createStore(reducers, applyMiddleware(ReduxThunk));
+
+if (process.env.NODE_ENV === 'development') {
+    const composeEnhancers = composeWithDevTools({});
+    store = createStore(reducers, composeEnhancers(applyMiddleware(ReduxThunk)));
+}
 
 export default store;

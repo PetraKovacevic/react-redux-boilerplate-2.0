@@ -17,7 +17,6 @@ const VENDOR_LIBS = [
   'react-redux',
   'react-dom',
   'redux-thunk',
-  'redux-devtools-extension',
   'babel-polyfill',
   'react-bootstrap'
 ];
@@ -151,6 +150,9 @@ module.exports = {
   },
   plugins: [
     ExtractStyles,
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
     new CopyWebpackPlugin([
       // Copy directory contents to {output}/to/directory/
       {
@@ -170,14 +172,14 @@ module.exports = {
         to: './'
       }
     ], {
-      ignore: [],
-      copyUnmodified: true
-    }),
+        ignore: [],
+        copyUnmodified: true
+      }),
     new webpack
       .optimize
       .CommonsChunkPlugin({
         names: ['vendor', 'manifest']
       }),
-    new HtmlWebpackPlugin({template: 'src/index.html'})
+    new HtmlWebpackPlugin({ template: 'src/index.html' })
   ]
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { bool, func, object } from 'prop-types';
 import { browserHistory } from 'react-router';
 
 import _ from 'lodash';
@@ -11,16 +11,16 @@ import { redirect } from '@/services/redirect';
 import { redirects } from '@/config';
 
 import {
-unauthenticate,
-refreshToken,
-startRefreshingToken,
-stopRefreshingToken,
-authSuccess
+    unauthenticate,
+    refreshToken,
+    startRefreshingToken,
+    stopRefreshingToken,
+    authSuccess
 } from '@/services/session/actions';
 
 import { updateCurrentUserDetails } from '@/data/users/actions';
 
-export default function(ComposedComponent) {
+export default function (ComposedComponent) {
     class Authentication extends React.Component {
         componentWillMount() {
             // First check if we are authenticated in redux
@@ -61,14 +61,14 @@ export default function(ComposedComponent) {
             // On path change check if the token needs to be refreshed
             if (!_.isEqual(nextProps.location.pathname, this.props.location.pathname)) {
                 this.refreshToken()
-                    .then( response => {})
-                    .catch( error => {});
+                    .then(response => { })
+                    .catch(error => { });
             }
         }
 
         refreshToken = () => {
             return new Promise((resolve, reject) => {
-                
+
                 const token = session.getToken();
 
                 // Request a token refresh, but only if a request has not been sent yet
@@ -101,15 +101,10 @@ export default function(ComposedComponent) {
         };
 
         render() {
-            return (
-                <div>
-                    { // Don't render component if token is being refreshed
-                        this.props.authenticated && !this.props.isRefreshingToken
-                        ? <ComposedComponent {...this.props} />
-                        : null
-                    }
-                </div>
-            );
+            return this.props.authenticated && !this.props.isRefreshingToken
+                ? <ComposedComponent {...this.props} />
+                : null
+                ;
         }
     }
 
@@ -138,6 +133,17 @@ export default function(ComposedComponent) {
                 dispatch(authSuccess(token));
             }
         };
+    };
+
+    Authentication.propTypes = {
+        authenticated: bool.isRequired,
+        isRefreshingToken: bool.isRequired,
+        updateCurrentUserDetails: func.isRequired,
+        unauthenticate: func.isRequired,
+        startRefreshingToken: func.isRequired,
+        stopRefreshingToken: func.isRequired,
+        authSuccess: func.isRequired,
+        location: object
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(Authentication);
