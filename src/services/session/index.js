@@ -132,7 +132,7 @@ export const configureAxios = (store) => {
         // get token from store
         let token = getToken();
 
-        if (token) {
+        if (token && !config.auth) {
             config.headers['authorization'] = 'Bearer ' + token;
         }
 

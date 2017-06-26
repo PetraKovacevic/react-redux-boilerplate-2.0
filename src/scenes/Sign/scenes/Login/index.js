@@ -19,7 +19,7 @@ class Login extends React.Component {
         }
     }
 
-    handleSubmit = (username, password) => {
+    handleSubmit = ({ username, password }) => {
         this.props.signIn(username, password);
     };
 
