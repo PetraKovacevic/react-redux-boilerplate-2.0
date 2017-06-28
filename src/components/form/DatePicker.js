@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import DatePicker from 'react-datepicker';
-
+import { bool, string, func } from 'prop-types';
 import moment from 'moment';
 
 class DatePickerInput extends React.Component {
@@ -16,12 +16,12 @@ class DatePickerInput extends React.Component {
 
     render() {
         const { label, labelClass,
-                wrapInputClass, inputClass,
-                error, touched,
-                inputHelp, group,
-                dateFormat, inputPlaceholder,
-                selectedDate, onChange,
-                ...inputProps } = this.props;
+            wrapInputClass, inputClass,
+            error, touched,
+            inputHelp, group,
+            dateFormat, inputPlaceholder,
+            selectedDate, onChange,
+            ...inputProps } = this.props;
 
         let cssClasses = classNames({
             'form-group': (typeof group === 'undefined' || group) ? true : false,
@@ -30,7 +30,13 @@ class DatePickerInput extends React.Component {
 
         return (
             <div className={cssClasses}>
-                {label ? <label htmlFor={this.state.controlId} className={labelClass}>{label}</label> : ""}
+                {label ?
+                    <label
+                        htmlFor={this.state.controlId}
+                        className={labelClass}>
+                        {label}</label>
+                    : ""
+                }
                 <div className={wrapInputClass}>
                     <DatePicker
                         {...inputProps}
@@ -40,7 +46,13 @@ class DatePickerInput extends React.Component {
                         placeholderText={inputPlaceholder}
                         selected={selectedDate ? moment(selectedDate) : null}
                         onChange={this.onDateChange} />
-                    {inputHelp && <span id="helpBlock" className="help-block">{inputHelp}</span>}
+                    {inputHelp &&
+                        <span
+                            id="helpBlock"
+                            className="help-block">
+                            {inputHelp}
+                        </span>
+                    }
                     {touched && error && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
                     {touched && error && <span className="help-block has-error">{error}</span>}
                 </div>
@@ -48,5 +60,21 @@ class DatePickerInput extends React.Component {
         );
     }
 }
+
+DatePickerInput.propTypes = {
+    label: string,
+    labelClass: string,
+    wrapInputClass: string,
+    inputClass: string,
+    error: string,
+    touched: bool,
+    inputHelp: string,
+    group: string,
+    dateFormat: string,
+    inputPlaceholder: string,
+    selectedDate: string,
+    onChange: func,
+    name: string
+};
 
 export default DatePickerInput;

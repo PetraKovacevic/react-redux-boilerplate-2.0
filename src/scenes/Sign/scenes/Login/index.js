@@ -28,7 +28,10 @@ class Login extends React.Component {
             <Row>
                 <Col sm={12}>
                     Login page... insert your imported form component here
-                    <LoginForm onSubmit={this.handleSubmit} disableButton={this.props.isUserSigningIn} />
+                    <LoginForm
+                        onSubmit={this.handleSubmit}
+                        disableButton={this.props.isUserSigningIn}
+                    />
                 </Col>
             </Row>
         );
