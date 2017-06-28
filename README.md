@@ -21,7 +21,7 @@ Make sure you have yarn installed (`npm install -g yarn` or `homebrew install ya
 - Components that only belong to one scene, should be a child of that scene
 - The same rule goes with actions, reducers, services, etc. Anything that is a direct child of something else should be nested accordingly in the folder structure
 - Use the `@` symbol when importing other components. See [this](https://www.npmjs.com/package/babel-plugin-root-import) for more info. (You will thank me later)
-- Try and use the container pattern. Containers do minimal markup (cols and rows), are responsible for data fetching, state management, handling events. Children of those containers have the component markup passed in through props
+- Try and use the container pattern. Containers do minimal markup (cols and rows), and are responsible for data fetching, state management, handling events. Children of those containers have the component markup and data passed in through props
 
 ### Default Routes
 
