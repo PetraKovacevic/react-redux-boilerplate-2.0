@@ -53,6 +53,10 @@ Or in your stylesheet
 background: url('my-image.png') no-repeat;
 ```
 
+### Unit tests ###
+
+If you have any issues getting the watcher to work in Linux run the following: `$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
+
 ### Editor config
 
 To align our IDEs (pun intended), there's an .editorconfig file to enforce spacing and tabs to save annoying whitespace changes and to keep our code looking consistent. Go [here](http://editorconfig.org/) for more information and install the plugin on your IDE if needed. (Some can use it out of the box)
