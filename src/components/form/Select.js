@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { string, object, bool, func, oneOfType } from 'prop-types';
 import _ from 'lodash';
 import classNames from 'classnames';
 
@@ -26,7 +26,12 @@ class SelectField extends React.Component {
 
         return _.map(options, (option, key) => {
             return (
-                <option key={key} value={option[valuePropName]}>{option[displayPropName]}</option>
+                <option
+                    key={key}
+                    value={option[valuePropName]}
+                >
+                    {option[displayPropName]}
+                </option>
             );
         });
     };
@@ -53,12 +58,29 @@ class SelectField extends React.Component {
 
         return (
             <div className={cssClasses}>
-                {label ? <label htmlFor={this.state.controlId} className={labelClass}>{label}</label> : ""}
+                {label ?
+                    <label
+                        htmlFor={this.state.controlId}
+                        className={labelClass}>
+                        {label}
+                    </label>
+                    : ""
+                }
                 <div className={wrapInputClass}>
-                    <select id={this.state.controlId} value={input.value} {...input}>
+                    <select
+                        id={this.state.controlId}
+                        value={input.value}
+                        {...input}
+                    >
                         {this.renderOptions(optionsValuePropName, optionsDisplayPropName, emptyOptionDisplayText, includeEmptyOption)}
                     </select>
-                    {inputHelp && <span id="helpBlock" className="help-block">{inputHelp}</span>}
+                    {inputHelp &&
+                        <span
+                            id="helpBlock"
+                            className="help-block">
+                            {inputHelp}
+                        </span>
+                    }
                     {touched && error && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
                     {touched && error && <span className="help-block has-error">{error}</span>}
                 </div>
@@ -66,5 +88,20 @@ class SelectField extends React.Component {
         );
     }
 }
+
+SelectField.propTypes = {
+    options: object,
+    label: string,
+    labelClass: string,
+    wrapInputClass: string,
+    inputHelp: string,
+    optionsDisplayPropName: oneOfType([string, func]),
+    optionsValuePropName: string,
+    includeEmptyOption: bool,
+    emptyOptionDisplayText: string,
+    group: string,
+    meta: object,
+    input: object
+};
 
 export default SelectField;

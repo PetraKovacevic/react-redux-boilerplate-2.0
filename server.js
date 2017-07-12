@@ -18,5 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
     res.sendFile(path.join(__dirname, 'build/index.html'));
   });
 }
-
+/* eslint-disable no-console */
 app.listen(process.env.PORT || 3050, () => console.log('Listening'));
+/* eslint-enable no-console */

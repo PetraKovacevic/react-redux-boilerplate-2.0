@@ -2,10 +2,11 @@ import React from 'react';
 import Paginator from 'react-pagify';
 import pagifyBootstrapPreset from 'react-pagify-preset-bootstrap';
 import segmentize from 'segmentize';
+import { object, bool, string, func } from 'prop-types';
 
 class Pagination extends React.Component {
     render() {
-        let {labels, pagination, onSelect, className, ...props} = this.props;
+        let { labels, pagination, onSelect, className, ...props } = this.props;
 
         if (isNaN(pagination.page) || isNaN(pagination.pages)) {
             return (
@@ -28,7 +29,9 @@ class Pagination extends React.Component {
                     beginPages: 4,
                     endPages: 4,
                     sidePages: 2
-                })} onSelect={onSelect}>
+                })}
+                onSelect={onSelect}
+            >
                 <Paginator.Button
                     className={pagination.page > 1 ? '' : 'disabled'}
                     page={pagination.page - 1}
@@ -38,13 +41,19 @@ class Pagination extends React.Component {
 
                 <Paginator.Segment field="beginPages" />
 
-                <Paginator.Ellipsis previousField="beginPages" nextField="previousPages" />
+                <Paginator.Ellipsis
+                    previousField="beginPages"
+                    nextField="previousPages" />
 
                 <Paginator.Segment field="previousPages" />
-                <Paginator.Segment field="centerPage" className="active" />
+                <Paginator.Segment
+                    field="centerPage"
+                    className="active" />
                 <Paginator.Segment field="nextPages" />
 
-                <Paginator.Ellipsis previousField="nextPages" nextField="endPages" />
+                <Paginator.Ellipsis
+                    previousField="nextPages"
+                    nextField="endPages" />
 
                 <Paginator.Segment field="endPages" />
 
@@ -61,9 +70,16 @@ class Pagination extends React.Component {
 
 Pagination.defaultProps = {
     labels: {
-        previous:   'Previous',
-        next:       'Next'
+        previous: 'Previous',
+        next: 'Next'
     }
+};
+
+Pagination.propTypes = {
+    labels: object,
+    pagination: object,
+    onSelect: func,
+    className: string
 };
 
 export default Pagination;

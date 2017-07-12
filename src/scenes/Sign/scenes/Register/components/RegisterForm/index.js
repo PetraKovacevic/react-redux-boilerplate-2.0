@@ -7,7 +7,12 @@ class RegisterForm extends React.Component {
         return (
             <Row>
                 <Col sm={12}>
-                    I am a form: <input type='text' placeholder='Some placeholder...' /> see?
+                    I am a form:
+                    <input
+                        type='text'
+                        placeholder='Some placeholder...'
+                    />
+                    see?
                 </Col>
             </Row>
         );

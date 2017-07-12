@@ -24,20 +24,25 @@ class LoginForm extends React.Component {
                     <Field
                         placeholder='Username'
                         name="username"
-                        component={ InputField }
+                        component={InputField}
                         type="text"
-                        label={ getString(strings.usernameLabel) }
+                        label={getString(strings.usernameLabel)}
                     />
                 </div>
                 <div>
                     <Field
                         name="password"
-                        component={ InputField }
+                        component={InputField}
                         type="password"
-                        label={ getString(strings.passwordLabel) } />
+                        label={getString(strings.passwordLabel)} />
                 </div>
                 <div>
-                    <button type="submit" disabled={this.props.disableButton}>Login</button>
+                    <button
+                        type="submit"
+                        disabled={this.props.disableButton}
+                    >
+                        Login
+                    </button>
                 </div>
             </form>
         );
