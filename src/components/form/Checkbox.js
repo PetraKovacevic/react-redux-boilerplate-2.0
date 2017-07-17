@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { string, bool, func, number, object } from 'prop-types';
 
 class CheckboxField extends React.Component {
     state = {
@@ -20,14 +21,16 @@ class CheckboxField extends React.Component {
             if (!!el.checked === false && !!el.disabled === false && props['data-permission-name'] !== 'All') {
                 el.click();
             }
-            if (props['data-permission-name'] !== 'All') { el.disabled = true; }
+            if (props['data-permission-name'] !== 'All') {
+                el.disabled = true;
+            }
         } else {
             el.disabled = false;
         }
     };
 
     render() {
-        const {label, labelClass, error, touched, inputHelp, group, ...inputProps} = this.props;
+        const { label, labelClass, error, touched, inputHelp, group, ...inputProps } = this.props;
 
         let cssClasses = classNames({
             'form-group': (typeof group === 'undefined' || group) ? true : false,
@@ -36,8 +39,15 @@ class CheckboxField extends React.Component {
 
         return (
             <div className={cssClasses}>
-                <input {...inputProps} id={this.state.controlId} type="checkbox" />
-                <label htmlFor={this.state.controlId} className={labelClass}>
+                <input
+                    {...inputProps}
+                    id={this.state.controlId}
+                    type="checkbox"
+                />
+                <label
+                    htmlFor={this.state.controlId}
+                    className={labelClass}
+                >
                     <span></span>
                     <span className="label-text-checkbox">{label}</span>
                 </label>
@@ -47,5 +57,14 @@ class CheckboxField extends React.Component {
         );
     }
 }
+
+CheckboxField.propTypes = {
+    label: string,
+    labelClass: string,
+    touched: bool,
+    error: string,
+    inputHelp: string,
+    group: string
+};
 
 export default CheckboxField;

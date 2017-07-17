@@ -10,6 +10,7 @@ import RequireAuth from '@/components/auth/RequireAuth';
 import Dashboard from '@/scenes/Dashboard';
 
 module.exports = (
+    /* eslint-disable react/jsx-max-props-per-line */
     <Router history={browserHistory}>
         <Route path="/" component={App} >
             <IndexRoute title="Home" component={Home} />
@@ -19,4 +20,7 @@ module.exports = (
         </Route>
         <Route path="*" component={Error404} status={404} />
     </Router>
+    /* eslint-enable react/jsx-max-props-per-line */
 );
+
+

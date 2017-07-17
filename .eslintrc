@@ -17,12 +17,18 @@
         "no-duplicate-imports": "error", // cleans things up!
         "no-console": "warn",
         "react/prefer-es6-class": "error",
+        "react/jsx-max-props-per-line": [
+            1,
+            {
+                "maximum": 1
+            }
+        ],
         "react/prop-types": [
             "warn",
             {
-                "skipUndeclared": true
+                "skipUndeclared": false
             }
-        ] // only put this back in if we are going to enforce propTypes on all components
+        ]
     },
     "plugins": [
         "react"
@@ -36,6 +42,6 @@
         }
     },
     "import/resolver": {
-      "babel-plugin-root-import": {}
+        "babel-plugin-root-import": {}
     }
 }

@@ -5,7 +5,7 @@ import * as api from '@/services/api';
 import store from '@/store';
 import * as storage from '@/services/storage';
 
-const apiEndpoints = {
+export const apiEndpoints = {
     auth: 'auth/jwt/login',
     refresh: 'auth/jwt/refresh'
 };
@@ -106,7 +106,9 @@ export const refreshToken = () => {
  */
 
 export const authenticate = (username, password) => {
-
+    // Setting an auth property tells Axios to send this
+    // as an 'Authorization' header and Base64 encode
+    // the username and password
     let config = {
         auth: {
             username,

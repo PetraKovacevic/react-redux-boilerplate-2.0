@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { string, object } from 'prop-types';
 
 class InputField extends React.Component {
     state = {
@@ -8,14 +9,14 @@ class InputField extends React.Component {
 
     render() {
         const { className,
-                label,
-                type,
-                labelClass,
-                wrapInputClass,
-                inputHelp,
-                group,
-                meta: { touched, error, warning },
-                input } = this.props;
+            label,
+            type,
+            labelClass,
+            wrapInputClass,
+            inputHelp,
+            group,
+            meta: { touched, error, warning },
+            input } = this.props;
 
         input['type'] = type || 'text';
 
@@ -26,15 +27,44 @@ class InputField extends React.Component {
 
         return (
             <div className={cssClasses}>
-                {label ? <label htmlFor={this.state.controlId} className={labelClass}>{label}</label> : ""}
+                {label ?
+                    <label
+                        htmlFor={this.state.controlId}
+                        className={labelClass}>
+                        {label}
+                    </label>
+                    : ""
+                }
                 <div className={wrapInputClass}>
-                    <input {...input} id={this.state.controlId} className={className} />
-                    {inputHelp && <span id="helpBlock" className="help-block">{inputHelp}</span>}
+                    <input
+                        {...input}
+                        id={this.state.controlId}
+                        className={className}
+                    />
+                    {inputHelp &&
+                        <span
+                            id="helpBlock"
+                            className="help-block">
+                            {inputHelp}
+                        </span>
+                    }
                     {touched && error && <span className="help-block has-error">{error}</span>}
                 </div>
             </div>
         );
     }
 }
+
+InputField.propTypes = {
+    className: string,
+    label: string,
+    type: string,
+    labelClass: string,
+    wrapInputClass: string,
+    group: string,
+    inputHelp: string,
+    meta: object,
+    input: object
+};
 
 export default InputField;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 
 import DocumentTitle from 'react-document-title';
 import PageTitle from '@/utils/pageTitle';
@@ -19,5 +20,9 @@ class Header extends React.Component {
         );
     }
 }
+
+Header.propTypes = {
+    title: string
+};
 
 export default Header;

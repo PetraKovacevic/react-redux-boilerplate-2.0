@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { object, node } from 'prop-types';
 
 import { Grid } from 'react-bootstrap';
 
@@ -8,7 +8,7 @@ import Header from '@/components/Header';
 
 class App extends React.Component {
     static contextTypes = {
-        router: PropTypes.object
+        router: object
     };
 
     renderChildren = () => {
@@ -24,5 +24,9 @@ class App extends React.Component {
         );
     }
 }
+
+App.propTypes = {
+    children: node
+};
 
 export default App;
