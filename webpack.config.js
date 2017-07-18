@@ -4,11 +4,14 @@ const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 
 const ExtractStyles = new ExtractTextPlugin({
   filename: '[name].[contenthash].css',
   disable: process.env.NODE_ENV === 'development'
 });
+
+const API_URL = process.env.API_URL || 'http://localhost:8080';
 
 const VENDOR_LIBS = [
   'react',
@@ -150,6 +153,16 @@ module.exports = {
   },
   plugins: [
     ExtractStyles,
+    new HtmlReplaceWebpackPlugin([
+      {
+        pattern: '@@API_URL',
+        replacement: API_URL.replace(/^(https?)?(:?\/\/)*(.+)/, "//$3")
+      },
+      {
+        pattern: '@@API_URL_IE',
+        replacement: API_URL.replace(/^(https?)?(:?\/\/)*(.+)/, "$1$2$3")
+      }
+    ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),

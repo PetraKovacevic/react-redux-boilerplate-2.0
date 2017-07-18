@@ -4194,6 +4194,10 @@ html-minifier@^3.2.3:
     relateurl "0.2.x"
     uglify-js "~2.8.22"
 
+html-replace-webpack-plugin@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/html-replace-webpack-plugin/-/html-replace-webpack-plugin-2.2.4.tgz#fba00240f408b89cc4af274f040567722fca2014"
+
 html-webpack-plugin@^2.24.1:
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-2.28.0.tgz#2e7863b57e5fd48fe263303e2ffc934c3064d009"
