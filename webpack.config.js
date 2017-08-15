@@ -129,23 +129,6 @@ module.exports = {
               publicPath: '/img/',
               emitFile: true
             }
-          }, {
-            loader: 'image-webpack-loader',
-            query: {
-              mozjpeg: {
-                progressive: true
-              },
-              gifsicle: {
-                interlaced: false
-              },
-              optipng: {
-                optimizationLevel: 7
-              },
-              pngquant: {
-                quality: '75-90',
-                speed: 3
-              }
-            }
           }
         ]
       }
